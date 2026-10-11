@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Phone, 
   ArrowUpRight, 
@@ -21,8 +21,10 @@ export default function Navbar({
   onNavigateSection 
 }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const isGalleryPage = location.pathname === '/gallery';
   const isHomePage = location.pathname === '/';
+  const isAboutPage = location.pathname === '/about';
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
@@ -67,8 +69,15 @@ export default function Navbar({
   const handleNavClick = (sectionId) => {
     setMobileMenuOpen(false);
     setProductsOpen(false);
-    if (onNavigateSection) {
-      onNavigateSection(sectionId);
+    if (isHomePage) {
+      if (onNavigateSection) {
+        onNavigateSection(sectionId);
+      } else {
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      navigate(`/#${sectionId}`);
     }
   };
 
@@ -173,9 +182,16 @@ export default function Navbar({
 
             <Link 
               to="/about" 
-              className="hover:text-[#1F7A4C] transition-colors cursor-pointer py-2"
+              className={`transition-colors cursor-pointer py-2 relative ${
+                isAboutPage 
+                  ? 'text-[#1F7A4C] font-bold' 
+                  : 'hover:text-[#1F7A4C]'
+              }`}
             >
               About Us
+              {isAboutPage && (
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#1F7A4C]"></span>
+              )}
             </Link>
 
             <button 
@@ -257,13 +273,12 @@ export default function Navbar({
               )}
             </Link>
 
-            <button 
-              type="button"
-              onClick={() => handleNavClick('contact')} 
+            <Link 
+              to="/contact" 
               className="hover:text-[#1F7A4C] transition-colors cursor-pointer py-2"
             >
               Contact Us
-            </button>
+            </Link>
           </nav>
 
           {/* Right Action: Prominent Outlined "Book Free Quote" button with circular green arrow icon */}
@@ -336,7 +351,11 @@ export default function Navbar({
             <Link
               to="/about"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-left py-2 text-base font-medium text-gray-800 block hover:text-[#1F7A4C]"
+              className={`w-full text-left py-2 text-base block ${
+                isAboutPage 
+                  ? 'font-bold text-[#1F7A4C]' 
+                  : 'font-medium text-gray-800 hover:text-[#1F7A4C]'
+              }`}
             >
               About Us
             </Link>
@@ -379,13 +398,13 @@ export default function Navbar({
             >
               Gallery &amp; Real Homes
             </Link>
-            <button
-              type="button"
-              onClick={() => handleNavClick('contact')}
-              className="w-full text-left py-2 text-base font-medium text-gray-800"
+            <Link
+              to="/contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full text-left py-2 text-base font-medium text-gray-800 block hover:text-[#1F7A4C]"
             >
               Contact Us
-            </button>
+            </Link>
           </div>
 
           <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
