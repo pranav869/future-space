@@ -142,15 +142,6 @@ export const galleryItems = [
     image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=85',
     alt: 'Minimalist contemporary prayer space with clean wooden lines and soft ambient glow'
   },
-  {
-    id: 'pu-3',
-    title: 'Traditional Harmony Pooja Alcove',
-    subtitle: 'Carved rosewood frame with brass inlays, incense storage drawers, and sacred warm illumination.',
-    category: 'Pooja Unit',
-    type: 'Design Inspiration',
-    image: 'https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?auto=format&fit=crop&w=1200&q=85',
-    alt: 'Artisan carved wooden pooja alcove with warm illumination'
-  },
 
   // 5. Architecture
   {
